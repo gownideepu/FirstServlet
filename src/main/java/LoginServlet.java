@@ -1,4 +1,3 @@
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebInitParam;
@@ -12,11 +11,11 @@ import java.io.PrintWriter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
- @WebServlet(description = "Login Servlet Testing",
+@WebServlet(description = "Login Servlet Testing",
         urlPatterns = {"/LoginServlet"},
         initParams = {
                 @WebInitParam(name="user",value = "Admin"),
-                @WebInitParam(name="pwd",value = "Pass")
+                @WebInitParam(name="pwd",value = "Pass@123")
         }
 )
 public class LoginServlet extends HttpServlet {
@@ -28,6 +27,10 @@ public class LoginServlet extends HttpServlet {
         String pwd=getServletConfig().getInitParameter("pwd");
 
         Pattern userPattern = Pattern.compile("^[A-Z]+[a-z]{3,}$");
+        Pattern passwordPattern = Pattern.compile("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$");
+
+        Matcher passwordMatcher = passwordPattern.matcher(password);
+
         Matcher UserMatcher = userPattern.matcher(user);
 
         if (UserMatcher.matches()) {
